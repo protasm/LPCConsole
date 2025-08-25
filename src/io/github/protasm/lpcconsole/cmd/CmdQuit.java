@@ -1,17 +1,17 @@
 package io.github.protasm.lpcconsole.cmd;
 
-import io.github.protasm.lpc2j.console.Console;
+import io.github.protasm.lpcconsole.LPCConsole;
 
 public class CmdQuit extends Command {
-    @Override
-    public boolean execute(Console console, String... args) {
-	System.out.println("Goodbye.");
+	@Override
+	public boolean execute(LPCConsole console, String... args) {
+		System.out.println("Goodbye.");
 
-	return false;
-    }
+		return false;
+	}
 
-    @Override
-    public String toString() {
-	return "Quit";
-    }
+	@Override
+	public String toString() {
+		return "Quit";
+	}
 }
