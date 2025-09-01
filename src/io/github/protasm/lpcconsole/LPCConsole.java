@@ -170,31 +170,31 @@ public class LPCConsole {
 		}
 	}
 
-	public void call(String className, String methodName, Object[] callArgs) {
-		Object obj = objects.get(className);
+       public Object call(String className, String methodName, Object[] callArgs) {
+               Object obj = objects.get(className);
 
-		if (obj == null) {
-			System.out.println("Error: Object '" + className + "' not loaded.");
+               if (obj == null) {
+                       System.out.println("Error: Object '" + className + "' not loaded.");
 
-			return;
-		}
+                       return null;
+               }
 
-		try {
-			Method[] methods = obj.getClass().getMethods();
+               try {
+                       Method[] methods = obj.getClass().getMethods();
 
-			for (Method method : methods)
-				if (method.getName().equals(methodName)) { // && matchParameters(method.getParameterTypes(), argTypes))
-					Object result = method.invoke(obj, callArgs);
+                       for (Method method : methods)
+                               if (method.getName().equals(methodName)) { // && matchParameters(method.getParameterTypes(), argTypes))
+                                       return method.invoke(obj, callArgs);
+                               }
+               } catch (InvocationTargetException e) {
+                       System.out.println(e.toString());
+                       e.getCause().printStackTrace();
+               } catch (IllegalAccessException e) {
+                       System.out.println(e.toString());
+               }
 
-					break;
-				}
-		} catch (InvocationTargetException e) {
-			System.out.println(e.toString());
-			e.getCause().printStackTrace();
-		} catch (IllegalAccessException e) {
-			System.out.println(e.toString());
-		}
-	}
+               return null;
+       }
 
 	public FSSourceFile compile(String vPathStr) {
 		FSSourceFile sf = parse(vPathStr);
