@@ -1,0 +1,7 @@
+#define PI 3.14
+
+#include "mathlib.h"
+
+int area(int r) {
+    return PI * r * r;
+}
