@@ -191,6 +191,8 @@ public class LPCConsole {
                        e.getCause().printStackTrace();
                } catch (IllegalAccessException e) {
                        System.out.println(e.toString());
+               } catch (IllegalArgumentException e) {
+            	   System.out.println(e.toString());
                }
 
                return null;
