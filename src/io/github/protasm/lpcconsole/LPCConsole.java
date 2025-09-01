@@ -153,22 +153,22 @@ public class LPCConsole {
 			}
 		}.defineClass(sf.bytes());
 
-		// Instantiate the class using reflection
-		try {
-			// Assume a no-arg constructor
-			Constructor<?> constructor = clazz.getConstructor();
-			Object instance = constructor.newInstance();
+                // Instantiate the class using reflection
+                try {
+                        // Assume a no-arg constructor
+                        Constructor<?> constructor = clazz.getConstructor();
+                        Object instance = constructor.newInstance();
 
-			sf.setLPCObject(instance);
+                        sf.setLPCObject(instance);
 
-			return sf;
-		} catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException
-				| InstantiationException e) {
-			System.out.println(e.toString());
+                        return sf;
+                } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException
+                                | InstantiationException | VerifyError e) {
+                        System.out.println(e.toString());
 
-			return null;
-		}
-	}
+                        return null;
+                }
+        }
 
        public Object call(String className, String methodName, Object[] callArgs) {
                Object obj = objects.get(className);
