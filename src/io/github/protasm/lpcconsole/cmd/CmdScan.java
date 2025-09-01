@@ -2,7 +2,7 @@ package io.github.protasm.lpcconsole.cmd;
 
 import io.github.protasm.lpcconsole.LPCConsole;
 import io.github.protasm.lpc2j.fs.FSSourceFile;
-import io.github.protasm.lpc2j.scanner.Tokens;
+import io.github.protasm.lpc2j.token.TokenList;
 
 public class CmdScan extends Command {
 	@Override
@@ -21,7 +21,7 @@ public class CmdScan extends Command {
 		if (sf == null)
 			return true;
 
-		Tokens tokens = sf.tokens();
+		TokenList tokens = sf.tokens();
 
 		if (tokens != null)
 			System.out.println(tokens);

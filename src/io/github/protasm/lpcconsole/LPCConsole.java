@@ -17,7 +17,7 @@ import io.github.protasm.lpc2j.parser.ParseException;
 import io.github.protasm.lpc2j.parser.Parser;
 import io.github.protasm.lpc2j.parser.ast.ASTObject;
 import io.github.protasm.lpc2j.scanner.Scanner;
-import io.github.protasm.lpc2j.scanner.Tokens;
+import io.github.protasm.lpc2j.token.TokenList;
 import io.github.protasm.lpcconsole.cmd.CmdCall;
 import io.github.protasm.lpcconsole.cmd.CmdCompile;
 import io.github.protasm.lpcconsole.cmd.CmdDirChange;
@@ -257,7 +257,7 @@ public class LPCConsole {
 				throw new IllegalArgumentException();
 
 			Scanner scanner = new Scanner();
-			Tokens tokens = scanner.scan(sf.source());
+			TokenList tokens = scanner.scan(sf.source());
 
 			sf.setTokens(tokens);
 
