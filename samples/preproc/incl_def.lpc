@@ -1,6 +1,10 @@
+#include "mathlib.h"
+
 #define PI 3.14
 
-#include "mathlib.h"
+int circumference(int r) {
+    return TWO * PI * r;
+}
 
 int area(int r) {
     return PI * r * r;
