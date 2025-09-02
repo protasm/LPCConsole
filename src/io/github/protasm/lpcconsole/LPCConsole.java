@@ -259,7 +259,13 @@ public class LPCConsole {
 				throw new IllegalArgumentException();
 
 			Scanner scanner = new Scanner();
-			TokenList tokens = scanner.scan(sf.source());
+
+			TokenList tokens = scanner.scan(
+			    sf.source(),
+			    ".",         // system include path
+			    ".",        // quote include path
+			    Path.of("/Users/jonathan/git/LPC2J/src/test/resources/samples/preproc/incl_def.lpc") // pretend file location
+			);
 
 			sf.setTokens(tokens);
 
