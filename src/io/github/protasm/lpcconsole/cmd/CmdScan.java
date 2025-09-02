@@ -1,8 +1,8 @@
 package io.github.protasm.lpcconsole.cmd;
 
-import io.github.protasm.lpcconsole.LPCConsole;
 import io.github.protasm.lpc2j.fs.FSSourceFile;
 import io.github.protasm.lpc2j.token.TokenList;
+import io.github.protasm.lpcconsole.LPCConsole;
 
 public class CmdScan extends Command {
 	@Override
@@ -18,13 +18,15 @@ public class CmdScan extends Command {
 		String vPathStr = pathStrOfArg(console.vPath(), args[0]);
 		FSSourceFile sf = console.scan(vPathStr);
 
-		if (sf == null)
+		if (sf == null) {
 			return true;
+		}
 
 		TokenList tokens = sf.tokens();
 
-		if (tokens != null)
+		if (tokens != null) {
 			System.out.println(tokens);
+		}
 
 		return true;
 	}

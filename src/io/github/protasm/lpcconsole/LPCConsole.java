@@ -67,7 +67,7 @@ public class LPCConsole {
 		objects = new LinkedHashMap<>();
 		inputScanner = new java.util.Scanner(System.in);
 
-		// Register Efuns
+// Register Efuns
 		EfunRegistry.register("foo", EfunFoo.INSTANCE);
 		EfunRegistry.register("write", EfunWrite.INSTANCE);
 	}
@@ -85,15 +85,17 @@ public class LPCConsole {
 	}
 
 	public String pwd() {
-		if (vPath.getNameCount() == 0)
+		if (vPath.getNameCount() == 0) {
 			return "/";
+		}
 
 		return "/" + vPath.toString();
 	}
 
 	public String pwdShort() {
-		if (vPath.getNameCount() == 0)
+		if (vPath.getNameCount() == 0) {
 			return "/";
+		}
 
 		return vPath.getFileName().toString();
 	}
@@ -111,31 +113,36 @@ public class LPCConsole {
 			System.out.print(pwdShort() + " % ");
 			String line = inputScanner.nextLine().trim();
 
-			if (line.isEmpty())
+			if (line.isEmpty()) {
 				continue;
+			}
 
 			String[] parts = line.split("\\s+");
 			String input = parts[0];
 
-			// Lookup command by alias
+// Lookup command by alias
 			Command cmd = LPCConsole.getCommand(input);
 
 			if (cmd != null) {
 				parts = (parts.length > 1) ? Arrays.copyOfRange(parts, 1, parts.length) : new String[0];
 
-				if (!cmd.execute(this, parts))
+				if (!cmd.execute(this, parts)) {
 					break;
-			} else
+				}
+			} else {
 				System.out.println("Unrecognized command: '" + input + "'.");
+			}
 		}
 
 		inputScanner.close();
 	}
 
 	public static Command getCommand(String alias) {
-		for (Map.Entry<Command, List<String>> entry : commands.entrySet())
-			if (entry.getValue().contains(alias))
+		for (Map.Entry<Command, List<String>> entry : commands.entrySet()) {
+			if (entry.getValue().contains(alias)) {
 				return entry.getKey();
+			}
+		}
 
 		return null;
 	}
@@ -143,8 +150,9 @@ public class LPCConsole {
 	public FSSourceFile load(String vPathStr) {
 		FSSourceFile sf = compile(vPathStr);
 
-		if (sf == null)
+		if (sf == null) {
 			return null;
+		}
 
 		// Define the class dynamically from the bytecode
 		Class<?> clazz = new ClassLoader() {
@@ -153,56 +161,58 @@ public class LPCConsole {
 			}
 		}.defineClass(sf.bytes());
 
-                // Instantiate the class using reflection
-                try {
-                        // Assume a no-arg constructor
-                        Constructor<?> constructor = clazz.getConstructor();
-                        Object instance = constructor.newInstance();
+		// Instantiate the class using reflection
+		try {
+			// Assume a no-arg constructor
+			Constructor<?> constructor = clazz.getConstructor();
+			Object instance = constructor.newInstance();
 
-                        sf.setLPCObject(instance);
+			sf.setLPCObject(instance);
 
-                        return sf;
-                } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException
-                                | InstantiationException | VerifyError e) {
-                        System.out.println(e.toString());
+			return sf;
+		} catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException
+				| VerifyError e) {
+			System.out.println(e.toString());
 
-                        return null;
-                }
-        }
+			return null;
+		}
+	}
 
-       public Object call(String className, String methodName, Object[] callArgs) {
-               Object obj = objects.get(className);
+	public Object call(String className, String methodName, Object[] callArgs) {
+		Object obj = objects.get(className);
 
-               if (obj == null) {
-                       System.out.println("Error: Object '" + className + "' not loaded.");
+		if (obj == null) {
+			System.out.println("Error: Object '" + className + "' not loaded.");
 
-                       return null;
-               }
+			return null;
+		}
 
-               try {
-                       Method[] methods = obj.getClass().getMethods();
+		try {
+			Method[] methods = obj.getClass().getMethods();
 
-                       for (Method method : methods)
-                               if (method.getName().equals(methodName)) { // && matchParameters(method.getParameterTypes(), argTypes))
-                                       return method.invoke(obj, callArgs);
-                               }
-               } catch (InvocationTargetException e) {
-                       System.out.println(e.toString());
-                       e.getCause().printStackTrace();
-               } catch (IllegalAccessException e) {
-                       System.out.println(e.toString());
-               } catch (IllegalArgumentException e) {
-            	   System.out.println(e.toString());
-               }
+			for (Method method : methods) {
+				if (method.getName().equals(methodName)) { // && matchParameters(method.getParameterTypes(), argTypes))
+					return method.invoke(obj, callArgs);
+				}
+			}
+		} catch (InvocationTargetException e) {
+			System.out.println(e.toString());
+			e.getCause().printStackTrace();
+		} catch (IllegalAccessException e) {
+			System.out.println(e.toString());
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.toString());
+		}
 
-               return null;
-       }
+		return null;
+	}
 
 	public FSSourceFile compile(String vPathStr) {
 		FSSourceFile sf = parse(vPathStr);
 
-		if (sf == null)
+		if (sf == null) {
 			return null;
+		}
 
 		try {
 			Compiler compiler = new Compiler("java/lang/Object");
@@ -212,8 +222,9 @@ public class LPCConsole {
 
 			boolean success = basePath.write(sf);
 
-			if (!success)
+			if (!success) {
 				throw new IllegalArgumentException();
+			}
 
 			return sf;
 		} catch (IllegalArgumentException e) {
@@ -228,7 +239,7 @@ public class LPCConsole {
 
 		if (sf == null)
 			return null;
-
+		
 		try {
 			Parser parser = new Parser();
 			ASTObject astObject = parser.parse(sf.slashName(), sf.tokens());
@@ -261,10 +272,10 @@ public class LPCConsole {
 			Scanner scanner = new Scanner();
 
 			TokenList tokens = scanner.scan(
-			    sf.source(),
-			    ".",         // system include path
-			    ".",        // quote include path
-			    Path.of("/Users/jonathan/git/LPC2J/src/test/resources/samples/preproc/incl_def.lpc") // pretend file location
+				sf.source(),
+				".", // system include path
+				".", // quote include path
+				Path.of("/Users/jonathan/git/LPC2J/src/test/resources/samples/preproc/incl_def.lpc") 
 			);
 
 			sf.setTokens(tokens);
@@ -287,6 +298,5 @@ public class LPCConsole {
 		LPCConsole console = new LPCConsole(args[0]);
 
 		console.repl();
-
 	}
 }

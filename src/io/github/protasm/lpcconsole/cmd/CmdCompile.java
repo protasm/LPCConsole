@@ -17,8 +17,9 @@ public class CmdCompile extends Command {
 		String vPathStr = pathStrOfArg(console.vPath(), args[0]);
 		FSSourceFile sf = console.compile(vPathStr);
 
-		if (sf == null)
+		if (sf == null) {
 			return true;
+		}
 
 		System.out.println("Success!  Compiled to " + sf.dotName());
 

@@ -13,14 +13,14 @@ public class CmdCall extends Command {
 			return true;
 		}
 
-               String[] strArgs = Arrays.copyOfRange(args, 2, args.length);
-               Object[] objArgs = inferArgTypes(console, strArgs);
+		String[] strArgs = Arrays.copyOfRange(args, 2, args.length);
+		Object[] objArgs = inferArgTypes(console, strArgs);
 
-               Object result = console.call(args[0], args[1], objArgs);
-               System.out.println(String.valueOf(result));
+		Object result = console.call(args[0], args[1], objArgs);
+		System.out.println(String.valueOf(result));
 
-               return true;
-       }
+		return true;
+	}
 
 	private Object[] inferArgTypes(LPCConsole console, String[] strArgs) {
 		Object[] objArgs = new Object[strArgs.length];

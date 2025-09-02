@@ -17,8 +17,9 @@ public class CmdLoad extends Command {
 		String vPathStr = pathStrOfArg(console.vPath(), args[0]);
 		FSSourceFile sf = console.load(vPathStr);
 
-		if (sf == null)
+		if (sf == null) {
 			return true;
+		}
 
 		console.objects().put(sf.dotName(), sf.lpcObject());
 

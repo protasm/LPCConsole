@@ -12,8 +12,9 @@ public abstract class Command {
 		Path vPath = Path.of(arg);
 
 		// handle relative path argument
-		if (!vPath.isAbsolute() && (consoleVPath != null))
+		if (!vPath.isAbsolute() && (consoleVPath != null)) {
 			vPath = Paths.get(consoleVPath.toString(), arg);
+		}
 
 		return vPath.toString();
 	}

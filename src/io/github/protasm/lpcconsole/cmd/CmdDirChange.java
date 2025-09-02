@@ -19,10 +19,11 @@ public class CmdDirChange extends Command {
 		String vPathStr = pathStrOfArg(console.vPath(), args[0]);
 		Path newPath = basePath.dirAt(vPathStr);
 
-		if (newPath != null)
+		if (newPath != null) {
 			console.setVPath(newPath);
-		else
+		} else {
 			System.out.println("Invalid path: " + args[0]);
+		}
 
 		return true;
 	}

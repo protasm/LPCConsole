@@ -16,9 +16,9 @@ public class CmdDirList extends Command {
 		File[] files;
 
 		try {
-			if (args.length == 0)
+			if (args.length == 0) {
 				files = basePath.filesIn(console.vPath().toString());
-			else {
+			} else {
 				String vPathStr = pathStrOfArg(console.vPath(), args[0]);
 				files = basePath.filesIn(vPathStr);
 			}
@@ -31,8 +31,9 @@ public class CmdDirList extends Command {
 
 			files = validFiles(files);
 
-			if (files.length > 0)
+			if (files.length > 0) {
 				printFiles(files);
+			}
 		} catch (InvalidPathException e) {
 			System.out.println("Invalid path: " + args[0]);
 		}

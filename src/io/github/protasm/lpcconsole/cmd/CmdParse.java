@@ -1,8 +1,8 @@
 package io.github.protasm.lpcconsole.cmd;
 
-import io.github.protasm.lpcconsole.LPCConsole;
 import io.github.protasm.lpc2j.fs.FSSourceFile;
 import io.github.protasm.lpc2j.parser.ast.visitor.PrintVisitor;
+import io.github.protasm.lpcconsole.LPCConsole;
 
 public class CmdParse extends Command {
 	@Override
@@ -18,8 +18,9 @@ public class CmdParse extends Command {
 		String vPathStr = pathStrOfArg(console.vPath(), args[0]);
 		FSSourceFile sf = console.parse(vPathStr);
 
-		if (sf == null)
+		if (sf == null) {
 			return true;
+		}
 
 		sf.astObject().accept(new PrintVisitor());
 
