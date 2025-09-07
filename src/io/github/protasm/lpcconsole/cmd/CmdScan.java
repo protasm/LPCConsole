@@ -1,8 +1,8 @@
 package io.github.protasm.lpcconsole.cmd;
 
-import io.github.protasm.lpc2j.fs.FSSourceFile;
 import io.github.protasm.lpc2j.token.TokenList;
 import io.github.protasm.lpcconsole.LPCConsole;
+import io.github.protasm.lpcconsole.fs.FSSourceFile;
 
 public class CmdScan extends Command {
 	@Override
@@ -10,7 +10,7 @@ public class CmdScan extends Command {
 		System.out.println("Scan");
 
 		if (args.length < 1) {
-			System.out.println("Error: No file specified.");
+			System.out.println("Error: No fileName specified.");
 
 			return true;
 		}
@@ -33,6 +33,6 @@ public class CmdScan extends Command {
 
 	@Override
 	public String toString() {
-		return "Scan <source file>";
+		return "Scan <source fileName>";
 	}
 }

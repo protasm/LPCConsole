@@ -11,8 +11,6 @@ import java.util.Map;
 
 import io.github.protasm.lpc2j.compiler.Compiler;
 import io.github.protasm.lpc2j.efun.EfunRegistry;
-import io.github.protasm.lpc2j.fs.FSBasePath;
-import io.github.protasm.lpc2j.fs.FSSourceFile;
 import io.github.protasm.lpc2j.parser.ParseException;
 import io.github.protasm.lpc2j.parser.Parser;
 import io.github.protasm.lpc2j.parser.ast.ASTObject;
@@ -34,9 +32,11 @@ import io.github.protasm.lpcconsole.cmd.CmdScan;
 import io.github.protasm.lpcconsole.cmd.Command;
 import io.github.protasm.lpcconsole.efuns.EfunFoo;
 import io.github.protasm.lpcconsole.efuns.EfunWrite;
+import io.github.protasm.lpcconsole.fs.FSSourceFile;
+import io.github.protasm.lpcconsole.fs.VirtualFileServer;
 
 public class LPCConsole {
-	private final FSBasePath basePath;
+	private final VirtualFileServer basePath;
 	private Path vPath;
 
 	private final Map<String, Object> objects;
@@ -61,7 +61,7 @@ public class LPCConsole {
 	}
 
 	public LPCConsole(String basePathStr) {
-		basePath = new FSBasePath(basePathStr);
+		basePath = new VirtualFileServer(basePathStr);
 		vPath = Path.of("/");
 
 		objects = new LinkedHashMap<>();
@@ -72,7 +72,7 @@ public class LPCConsole {
 		EfunRegistry.register("write", EfunWrite.INSTANCE);
 	}
 
-	public FSBasePath basePath() {
+	public VirtualFileServer basePath() {
 		return basePath;
 	}
 
@@ -228,7 +228,7 @@ public class LPCConsole {
 
 			return sf;
 		} catch (IllegalArgumentException e) {
-			System.out.println("Error compiling file: " + vPathStr);
+			System.out.println("Error compiling fileName: " + vPathStr);
 
 			return null;
 		}
@@ -248,7 +248,7 @@ public class LPCConsole {
 
 			return sf;
 		} catch (ParseException | IllegalArgumentException e) {
-			System.out.println("Error parsing file: " + vPathStr);
+			System.out.println("Error parsing fileName: " + vPathStr);
 			System.out.println(e);
 
 			return null;
@@ -282,7 +282,7 @@ public class LPCConsole {
 
 			return sf;
 		} catch (IllegalArgumentException e) {
-			System.out.println("Error scanning file: " + vPathStr);
+			System.out.println("Error scanning fileName: " + vPathStr);
 
 			return null;
 		}

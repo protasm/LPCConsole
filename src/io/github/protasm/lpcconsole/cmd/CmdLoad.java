@@ -1,7 +1,7 @@
 package io.github.protasm.lpcconsole.cmd;
 
-import io.github.protasm.lpc2j.fs.FSSourceFile;
 import io.github.protasm.lpcconsole.LPCConsole;
+import io.github.protasm.lpcconsole.fs.FSSourceFile;
 
 public class CmdLoad extends Command {
 	@Override
@@ -9,7 +9,7 @@ public class CmdLoad extends Command {
 		System.out.println("Load");
 
 		if (args.length == 0) {
-			System.out.println("Error: No file specified.");
+			System.out.println("Error: No fileName specified.");
 
 			return true;
 		}
@@ -30,6 +30,6 @@ public class CmdLoad extends Command {
 
 	@Override
 	public String toString() {
-		return "Load <source file>";
+		return "Load <source fileName>";
 	}
 }

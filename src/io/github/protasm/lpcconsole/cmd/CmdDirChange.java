@@ -2,13 +2,13 @@ package io.github.protasm.lpcconsole.cmd;
 
 import java.nio.file.Path;
 
-import io.github.protasm.lpc2j.fs.FSBasePath;
 import io.github.protasm.lpcconsole.LPCConsole;
+import io.github.protasm.lpcconsole.fs.VirtualFileServer;
 
 public class CmdDirChange extends Command {
 	@Override
 	public boolean execute(LPCConsole console, String... args) {
-		FSBasePath basePath = console.basePath();
+		VirtualFileServer basePath = console.basePath();
 
 		if (args.length == 0) {
 			console.setVPath(Path.of("/"));

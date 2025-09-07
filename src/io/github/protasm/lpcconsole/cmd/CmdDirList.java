@@ -6,13 +6,13 @@ import java.nio.file.InvalidPathException;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import io.github.protasm.lpc2j.fs.FSBasePath;
 import io.github.protasm.lpcconsole.LPCConsole;
+import io.github.protasm.lpcconsole.fs.VirtualFileServer;
 
 public class CmdDirList extends Command {
 	@Override
 	public boolean execute(LPCConsole console, String... args) {
-		FSBasePath basePath = console.basePath();
+		VirtualFileServer basePath = console.basePath();
 		File[] files;
 
 		try {
